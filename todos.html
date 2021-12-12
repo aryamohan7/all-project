@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">User id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Id</th>
+                <th scope="col">Completed</th>
+            </tr>
+           
+
+        </thead>
+        <tbody id="data">
+            <tr>
+
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        var request = new XMLHttpRequest();
+      request.open("get","https://jsonplaceholder.typicode.com/todos")
+      request.send()
+      request.onreadystatechange=()=>{
+        if(request.readyState==4){
+          if(request.status>=200 && request.status<300){
+            let todos = JSON.parse(request.responseText)
+            console.log(todos);
+           displayTodosData(todos)
+          }
+        }
+      }
+function displayTodosData(todos){
+    let html_data=``
+    for(let todo_data of todos){
+        html_data+=`
+        <tr>
+            <td>${todo_data.userId}</td>
+            <td>${todo_data.title}</td>
+            <td>${todo_data.id}</td>
+            <td>${todo_data.completed}</td>
+        </tr> 
+       
+        `
+        document.querySelector("#data").innerHTML=html_data
+    }
+}
+
+    </script>
+</body>
+</html>
